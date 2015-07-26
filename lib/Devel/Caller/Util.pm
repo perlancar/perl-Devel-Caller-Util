@@ -14,7 +14,7 @@ sub callers {
     my $start = shift // 0;
 
     my @res;
-    my $i = $start;
+    my $i = $start+1;
     while (my @caller = caller($i)) {
         push @res, \@caller;
         $i++;
