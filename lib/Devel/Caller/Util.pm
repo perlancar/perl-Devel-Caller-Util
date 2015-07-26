@@ -17,20 +17,21 @@ sub callers {
     my @res;
     my $i = $start+1;
 
-    if ($with_args) {
-        {
-            package DB;
-            while (my @caller = caller($i)) {
-                $caller[11] = [@DB::args];
-                push @res, \@caller;
-                $i++;
+    while (1) {
+        my @caller;
+        if ($with_args) {
+            {
+                package DB;
+                @caller = caller($i);
+                $caller[11] = [@DB::args] if @caller;
             }
+        } else {
+            @caller = caller($i);
         }
-    } else {
-        while (my @caller = caller($i)) {
-            push @res, \@caller;
-            $i++;
-        }
+        last unless @caller;
+
+        push @res, \@caller;
+        $i++;
     }
 
     @res;
