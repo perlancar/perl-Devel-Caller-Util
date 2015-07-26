@@ -33,6 +33,11 @@ sub callers {
  my @callers = callers();
 
 
+=head1 FUNCTIONS
+
+=head2 callers([ $n ]) => LIST
+
+
 =head1 SEE ALSO
 
 =cut
