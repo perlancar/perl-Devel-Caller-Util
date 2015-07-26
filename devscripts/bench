@@ -1,0 +1,36 @@
+#!/usr/bin/env perl
+
+use 5.010;
+use strict;
+use warnings;
+use FindBin '$Bin';
+use lib "$Bin/../lib";
+
+use Benchmark::Dumb qw(cmpthese);
+use Devel::Caller::Util qw(callers);
+
+sub f5 { callers }
+sub f4 { f5 }
+sub f3 { f4 }
+sub f2 { f3 }
+sub f1 { f2 }
+
+sub g10 { callers }
+sub g9 { g10 }
+sub g8 { g9 }
+sub g7 { g8 }
+sub g6 { g7 }
+sub g5 { g6 }
+sub g4 { g5 }
+sub g3 { g4 }
+sub g2 { g3 }
+sub g1 { g2 }
+
+cmpthese(
+    0,
+    {
+        'callers ( +0)' => sub { callers },
+        'callers ( +5)' => sub { f1 },
+        'callers (+10)' => sub { g1 },
+    },
+);
