@@ -8,7 +8,7 @@ use warnings;
 use strict;
 
 use Exporter qw(import);
-our @EXPORT_OK = qw(caller);
+our @EXPORT_OK = qw(callers);
 
 sub callers {
     my $start = shift // 0;
