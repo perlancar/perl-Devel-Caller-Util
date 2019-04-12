@@ -8,7 +8,9 @@ use warnings;
 use strict;
 
 use Exporter qw(import);
-our @EXPORT_OK = qw(callers);
+our @EXPORT_OK = qw(caller callers);
+
+my $_is_caller;
 
 sub callers {
     my ($start, $with_args, $packages_to_ignore, $subroutines_to_ignore) = @_;
@@ -48,10 +50,16 @@ sub callers {
             }
         }
 
+        do { $_is_caller = 0; return @caller } if $_is_caller;
         push @res, \@caller;
     }
 
     @res;
+}
+
+sub caller {
+    $_is_caller = 1; # "local" doesn't work here
+    goto &callers;
 }
 
 1;
@@ -59,12 +67,18 @@ sub callers {
 
 =head1 SYNOPSIS
 
- use Devel::Util::Caller qw(callers);
+ use Devel::Util::Caller qw(caller callers);
+
+ my @info = caller(3);
 
  my @callers = callers();
 
 
 =head1 FUNCTIONS
+
+=head2 caller([ $offset [, $with_args [, $packages_to_ignore [, $subroutines_to_ignore ] ] ] ]) => LIST
+
+Just like the built-in C<caller()>
 
 =head2 callers([ $start=0 [, $with_args [, $packages_to_ignore [, $subroutines_to_ignore ] ] ] ]) => LIST
 
