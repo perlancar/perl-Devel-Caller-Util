@@ -75,9 +75,26 @@ sub caller {
 
 =head1 FUNCTIONS
 
-=head2 caller([ $offset [, $with_args [, $packages_to_ignore [, $subroutines_to_ignore ] ] ] ]) => LIST
+=head2 caller
 
-Just like the built-in C<caller()>
+Usage:
+
+ caller([ $offset [, $with_args [, $packages_to_ignore [, $subroutines_to_ignore ] ] ] ]) => LIST
+
+Just like the built-in C<caller()>, except with three additional optional
+arguments. Will return this list:
+
+     #  0          1           2       3             4          5            6           7             8        9          10
+     ($package1, $filename1, $line1, $subroutine1, $hasargs1, $wantarray1, $evaltext1, $is_require1, $hints1, $bitmask1, $hinthash1)
+
+If C<$with_args> is true, will also return subroutine arguments in the 11th
+element of the result, produced by retrieving C<@DB::args>.
+
+C<$packages_to_ignore> can be set to a regex (will be matched against
+C<$packageI>) or an arrayref of package names.
+
+Similarly, C<$subroutines_to_ignore> can be set to a regex or an arrayref of
+subroutine names. Note that subroutine names are B<fully qualified names>.
 
 =head2 callers([ $start=0 [, $with_args [, $packages_to_ignore [, $subroutines_to_ignore ] ] ] ]) => LIST
 
@@ -92,13 +109,8 @@ Result will be like:
      ...
  )
 
-If C<$with_args> is true, will also return subroutine arguments in the 11th
-element of each frame, produced by retrieving C<@DB::args>.
-
-C<$packages_to_ignore> can be set to a regex (will be matched against
-C<$packageI>) or an arrayref of package names. Similarly,
-C<$subroutines_to_ignore> can be set to a regex or an arrayref of subroutine
-names. Note that subroutine names are B<fully qualified names>.
+See L</caller> for more information about the three additional, optional
+arguments.
 
 
 =head1 SEE ALSO
