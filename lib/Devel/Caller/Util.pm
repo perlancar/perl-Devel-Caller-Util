@@ -16,7 +16,7 @@ sub callers {
     $start = 0 unless defined $start;
 
     my @res;
-    my $i = $start+1;
+    my $i = 1;
 
     while (1) {
         my @caller;
@@ -49,10 +49,12 @@ sub callers {
             }
         }
 
-        do { $_is_caller = 0; return @caller } if $_is_caller;
         push @res, \@caller;
+        do { $_is_caller = 0; return @caller } if $_is_caller && @res == $start+1;
     }
 
+    splice @res, 0, $start if $start;
+    $_is_caller = 0;
     @res;
 }
 
