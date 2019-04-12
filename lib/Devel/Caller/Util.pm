@@ -11,8 +11,8 @@ use Exporter qw(import);
 our @EXPORT_OK = qw(callers);
 
 sub callers {
-    my $start = $_[0] // 0;
-    my $with_args = $_[1];
+    my ($start, $with_args, $packages_to_ignore, $subroutines_to_ignore) = @_;
+    $start //= 0;
 
     my @res;
     my $i = $start+1;
@@ -21,7 +21,8 @@ sub callers {
         my @caller;
         if ($with_args) {
             {
-                package DB;
+                package # hide from PAUSE
+                    DB;
                 @caller = caller($i);
                 $caller[11] = [@DB::args] if @caller;
             }
@@ -29,9 +30,25 @@ sub callers {
             @caller = caller($i);
         }
         last unless @caller;
+        $i++;
+
+        if ($packages_to_ignore) {
+            if (ref $packages_to_ignore eq 'ARRAY') {
+                next if grep { $_ eq $caller[0] } @$packages_to_ignore;
+            } else {
+                next if $caller[0] =~ $packages_to_ignore;
+            }
+        }
+
+        if ($subroutines_to_ignore) {
+            if (ref $subroutines_to_ignore eq 'ARRAY') {
+                next if grep { $_ eq $caller[3] } @$subroutines_to_ignore;
+            } else {
+                next if $caller[3] =~ $subroutines_to_ignore;
+            }
+        }
 
         push @res, \@caller;
-        $i++;
     }
 
     @res;
@@ -49,7 +66,7 @@ sub callers {
 
 =head1 FUNCTIONS
 
-=head2 callers([ $start=0 [, $with_args] ]) => LIST
+=head2 callers([ $start=0 [, $with_args [, $packages_to_ignore [, $subroutines_to_ignore ] ] ] ]) => LIST
 
 A convenience function to return the whole callers stack, produced by calling
 C<caller()> repeatedly from frame C<$start+1> until C<caller()> returns empty.
@@ -64,6 +81,11 @@ Result will be like:
 
 If C<$with_args> is true, will also return subroutine arguments in the 11th
 element of each frame, produced by retrieving C<@DB::args>.
+
+C<$packages_to_ignore> can be set to a regex (will be matched against
+C<$packageI>) or an arrayref of package names. Similarly,
+C<$subroutines_to_ignore> can be set to a regex or an arrayref of subroutine
+names. Note that subroutine names are B<fully qualified names>.
 
 
 =head1 SEE ALSO
