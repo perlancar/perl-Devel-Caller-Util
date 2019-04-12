@@ -98,7 +98,11 @@ C<$packageI>) or an arrayref of package names.
 Similarly, C<$subroutines_to_ignore> can be set to a regex or an arrayref of
 subroutine names. Note that subroutine names are B<fully qualified names>.
 
-=head2 callers([ $start=0 [, $with_args [, $packages_to_ignore [, $subroutines_to_ignore ] ] ] ]) => LIST
+=head2 callers
+
+Usage:
+
+ callers([ $start=0 [, $with_args [, $packages_to_ignore [, $subroutines_to_ignore ] ] ] ]) => LIST
 
 A convenience function to return the whole callers stack, produced by calling
 C<caller()> repeatedly from frame C<$start+1> until C<caller()> returns empty.
