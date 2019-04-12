@@ -1,3 +1,9 @@
+0.042   2019-04-12 (PERLANCAR)
+
+	- [Bugfix] Ugh, if we allow ignoring things then we cannot start at
+	  i>1 but must build our own stack.
+
+
 0.041   2019-04-12 (PERLANCAR)
 
 	- No functional changes.
