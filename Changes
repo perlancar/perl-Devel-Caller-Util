@@ -1,3 +1,13 @@
+0.040   2019-04-12 (PERLANCAR)
+
+        - Add function: caller().
+
+        - Add arguments (to caller() as well as callers()): packages_to_ignore,
+          subroutines_to_ignore.
+
+        - Remove requirement of perl minimum version 5.010.
+
+
 0.03    2015-07-26 (PERLANCAR)
 
 	- No functional changes.

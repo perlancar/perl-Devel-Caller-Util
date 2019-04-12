@@ -3,7 +3,6 @@ package Devel::Caller::Util;
 # DATE
 # VERSION
 
-use 5.010001;
 use warnings;
 use strict;
 
@@ -14,7 +13,7 @@ my $_is_caller;
 
 sub callers {
     my ($start, $with_args, $packages_to_ignore, $subroutines_to_ignore) = @_;
-    $start //= 0;
+    $start = 0 unless defined $start;
 
     my @res;
     my $i = $start+1;
