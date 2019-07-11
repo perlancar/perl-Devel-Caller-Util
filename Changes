@@ -1,17 +1,17 @@
-0.042   2019-04-12 (PERLANCAR)
+0.042   2019-04-12  Released-By: PERLANCAR
 
 	- [Bugfix] Ugh, if we allow ignoring things then we cannot start at
 	  i>1 but must build our own stack.
 
 
-0.041   2019-04-12 (PERLANCAR)
+0.041   2019-04-12  Released-By: PERLANCAR
 
 	- No functional changes.
 
 	- [doc] Fix/reformat doc.
 
 
-0.040   2019-04-12 (PERLANCAR)
+0.040   2019-04-12  Released-By: PERLANCAR
 
         - Add function: caller().
 
@@ -21,18 +21,18 @@
         - Remove requirement of perl minimum version 5.010.
 
 
-0.03    2015-07-26 (PERLANCAR)
+0.03    2015-07-26  Released-By: PERLANCAR
 
 	- No functional changes.
 
 	- [refactor] Reduce code duplication.
 
 
-0.02    2015-07-26 (PERLANCAR)
+0.02    2015-07-26  Released-By: PERLANCAR
 
 	- Add second arg 'with_args' to retrieve sub arguments, add doc.
 
 
-0.01    2015-07-26 (PERLANCAR)
+0.01    2015-07-26  Released-By: PERLANCAR
 
         - First release.
